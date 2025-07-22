@@ -1,11 +1,11 @@
 <?php
 // ----------- KONEKSI PDO (Menggunakan variabel lingkungan individual) -----------
 // Ini adalah metode paling handal jika MYSQL_URL bermasalah
-$host = getenv('MYSQL_HOST');
+$host = getenv('MYSQLHOST');
 $dbname = getenv('MYSQL_DATABASE');
 $user = getenv('MYSQL_USER');
 $pass = getenv('MYSQL_ROOT_PASSWORD'); // Gunakan ini karena ini password root yang Anda miliki
-$port = getenv('MYSQL_PORT');
+$port = getenv('MYSQLPORT');
 
 //**Debugging Tambahan (Hapus setelah berhasil):**
 echo "DEBUG: Host: $host<br>";
