@@ -1,11 +1,16 @@
 <?php
 // ----------- KONEKSI PDO -----------
-// Mengambil kredensial dari environment variables Railway
-$host = getenv('MYSQL_HOST'); // mysql.railway.internal
-$dbname = getenv('MYSQL_DATABASE'); // railway
-$user = getenv('MYSQL_USER'); // root
-$pass = getenv('MYSQL_ROOT_PASSWORD'); // Password yang panjang dari dashboard
-$port = getenv('MYSQL_PORT'); // 3306
+// Mengambil MYSQL_URL dari environment variables Railway
+$mysql_url = getenv('MYSQL_URL');
+
+// Mem-parse URL untuk mendapatkan komponen-komponennya
+$url_components = parse_url($mysql_url);
+
+$host = $url_components['host'];
+$dbname = ltrim($url_components['path'], '/'); // Menghapus slash di awal path
+$user = $url_components['user'];
+$pass = $url_components['pass'];
+$port = $url_components['port'];
 
 try {
     $pdo = new PDO("mysql:host=$host;port=$port;dbname=$dbname", $user, $pass);
@@ -19,34 +24,34 @@ try {
 
 <?php
 // ----------- KONEKSI MySQLi (prosedural) -----------
-// Mengambil kredensial dari environment variables Railway
-$host = getenv('MYSQL_HOST'); // mysql.railway.internal
-$user = getenv('MYSQL_USER'); // root
-$pass = getenv('MYSQL_ROOT_PASSWORD'); // Password yang panjang
-$db   = getenv('MYSQL_DATABASE'); // railway
-$port = getenv('MYSQL_PORT'); // 3306
+// Ini akan menggunakan kredensial dari MYSQL_HOST dll. seperti sebelumnya
+$host = getenv('MYSQL_HOST');
+$user = getenv('MYSQL_USER');
+$pass = getenv('MYSQL_ROOT_PASSWORD');
+$db   = getenv('MYSQL_DATABASE');
+$port = getenv('MYSQL_PORT');
 
 $conn = mysqli_connect($host, $user, $pass, $db, $port);
 
 if (!$conn) {
     die("Koneksi MySQLi prosedural gagal: " . mysqli_connect_error());
 }
-//echo "Koneksi MySQLi prosedural berhasil!"; // Untuk debugging, bisa dihapus nanti
+//echo "Koneksi MySQLi prosedural berhasil!";
 ?>
 
 <?php
 // ----------- KONEKSI MySQLi (objek) -----------
-// Mengambil kredensial dari environment variables Railway
-$host = getenv('MYSQL_HOST'); // mysql.railway.internal
-$user = getenv('MYSQL_USER'); // root
-$pass = getenv('MYSQL_ROOT_PASSWORD'); // Password yang panjang
-$dbname = getenv('MYSQL_DATABASE'); // railway
-$port = getenv('MYSQL_PORT'); // 3306
+// Ini akan menggunakan kredensial dari MYSQL_HOST dll. seperti sebelumnya
+$host = getenv('MYSQL_HOST');
+$user = getenv('MYSQL_USER');
+$pass = getenv('MYSQL_ROOT_PASSWORD');
+$dbname = getenv('MYSQL_DATABASE');
+$port = getenv('MYSQL_PORT');
 
 $koneksi = new mysqli($host, $user, $pass, $dbname, $port);
 
 if ($koneksi->connect_error) {
     die("Koneksi MySQLi objek gagal: " . $koneksi->connect_error);
 }
-//echo "Koneksi MySQLi objek berhasil!"; // Untuk debugging, bisa dihapus nanti
+//echo "Koneksi MySQLi objek berhasil!";
 ?>
