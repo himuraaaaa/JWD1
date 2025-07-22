@@ -8,20 +8,26 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
 }
 
 // Koneksi database
+// Pastikan Koneksi.php ini sudah menyediakan $pdo object
 include 'Koneksi.php';
 
 $pesan = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $judul = mysqli_real_escape_string($conn, $_POST['judul']);
-    $isi   = mysqli_real_escape_string($conn, $_POST['isi']);
+    $judul = $_POST['judul']; // Tidak perlu mysqli_real_escape_string lagi
+    $isi   = $_POST['isi'];   // Tidak perlu mysqli_real_escape_string lagi
 
     if (!empty($judul) && !empty($isi)) {
-        $query = "INSERT INTO artikel (judul, isi) VALUES ('$judul', '$isi')";
-        if (mysqli_query($conn, $query)) {
+        // Menggunakan Prepared Statement PDO untuk INSERT
+        $stmt = $pdo->prepare("INSERT INTO artikel (judul, isi) VALUES (?, ?)");
+        
+        // Eksekusi statement dengan binding parameter
+        if ($stmt->execute([$judul, $isi])) {
             $pesan = "✅ Artikel berhasil diupload!";
         } else {
-            $pesan = "❌ Gagal upload: " . mysqli_error($conn);
+            // Mengambil informasi error dari PDO
+            $errorInfo = $stmt->errorInfo();
+            $pesan = "❌ Gagal upload: " . $errorInfo[2]; // $errorInfo[2] berisi pesan error SQL
         }
     } else {
         $pesan = "❗ Judul dan Isi tidak boleh kosong!";
@@ -36,6 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <title>Upload Artikel</title>
   <link rel="stylesheet" href="style.css">
   <style>
+    /* ... (CSS Anda tetap sama) ... */
     .form-container {
       max-width: 600px;
       margin: 30px auto;
