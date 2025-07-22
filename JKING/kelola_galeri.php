@@ -17,19 +17,24 @@
     </thead>
     <tbody>
       <?php
+      // Pastikan Koneksi.php ini sudah menyediakan $pdo object
       include 'Koneksi.php';
-      $result = mysqli_query($conn, "SELECT * FROM galeri WHERE kategori='klien' ORDER BY id DESC");
+
+      // Menggunakan PDO untuk SELECT query
+      $stmt = $pdo->query("SELECT * FROM galeri WHERE kategori='klien' ORDER BY id DESC");
+      $rows = $stmt->fetchAll(PDO::FETCH_ASSOC); // Ambil semua hasil sekaligus
+
       $no = 1;
-      while ($row = mysqli_fetch_assoc($result)) {
+      foreach ($rows as $row) { // Menggunakan foreach untuk mengiterasi hasil PDO
         echo "<tr>
                 <td>{$no}</td>
-                <td>{$row['judul']}</td>
-                <td><img src='uploads/{$row['nama_file']}' width='100'></td>
-                <td>{$row['keterangan']}</td>
-                <td>{$row['isi']}</td>
+                <td>" . htmlspecialchars($row['judul']) . "</td>
+                <td><img src='uploads/" . htmlspecialchars($row['nama_file']) . "' width='100'></td>
+                <td>" . htmlspecialchars($row['keterangan']) . "</td>
+                <td>" . htmlspecialchars($row['isi']) . "</td>
                 <td>
-                  <a href='editgaleri.php?id={$row['id']}'>Edit</a> |
-                  <a href='hapusfoto.php?id={$row['id']}' onclick=\"return confirm('Hapus foto ini?');\" style='color:red;'>🗑 Hapus</a>
+                  <a href='editgaleri.php?id=" . htmlspecialchars($row['id']) . "'>Edit</a> |
+                  <a href='hapusfoto.php?id=" . htmlspecialchars($row['id']) . "' onclick=\"return confirm('Hapus foto ini?');\" style='color:red;'>🗑 Hapus</a>
                 </td>
               </tr>";
         $no++;
