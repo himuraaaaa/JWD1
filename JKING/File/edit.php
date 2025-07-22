@@ -1,5 +1,5 @@
 <?php
-include '../koneksi.php';
+include '../Koneksi.php';
 $id = $_GET['id'];
 $data = $koneksi->query("SELECT * FROM file_upload WHERE id=$id")->fetch_assoc();
 

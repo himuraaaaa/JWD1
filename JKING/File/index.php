@@ -1,5 +1,5 @@
 <?php
-include '../koneksi.php';
+include '../Koneksi.php';
 $data = $koneksi->query("SELECT * FROM file_upload ORDER BY tanggal_upload DESC");
 ?>
 

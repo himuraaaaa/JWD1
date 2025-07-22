@@ -1,5 +1,5 @@
 <?php
-include '../koneksi.php';
+include '../Koneksi.php';
 $id = $_GET['id'];
 
 $result = $koneksi->query("SELECT nama_file FROM file_upload WHERE id=$id");
