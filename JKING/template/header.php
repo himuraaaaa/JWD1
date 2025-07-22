@@ -8,7 +8,7 @@
 <body>
 <div class="container">
     <header>
-        <img src="../Assets/Logo.png" alt="JKING Logo" class="logo">
+        <img src="assets/Logo.png" alt="JKING Logo" class="logo">
         <h1>JKING Holdings</h1>
     </header>
 <nav>
