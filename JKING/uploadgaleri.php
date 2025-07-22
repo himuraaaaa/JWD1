@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $allowed  = ['jpg', 'jpeg', 'png'];
 
         if (in_array($fileExt, $allowed)) {
-            $folder = "/app/uploads-data/"; // Gunakan jalur yang Anda isi di Railway
+            $folder = "uploads/";
             // Pastikan folder 'uploads/' ada. Buat jika belum.
             // Anda perlu memastikan folder ini memiliki izin tulis di server (0777).
             if (!is_dir($folder)) {
