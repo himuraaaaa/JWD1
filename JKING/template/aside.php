@@ -8,7 +8,7 @@
         <p>Event Galery</p>
         <p>Client Gallery</p>
         <h3>Kami Login</h3>
-        <a href="Signin.php">Sign In</a>
-        <a href="Signup.php">Sign Up</a>
+        <a href="newsignin.php">Sign In</a>
+        <a href="newsignup.php">Sign Up</a>
         <h3>Artikel</h3>
     </aside>
