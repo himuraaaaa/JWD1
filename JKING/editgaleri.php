@@ -1,5 +1,6 @@
 <?php
 session_start();
+// Pastikan Koneksi.php ini sudah menyediakan $pdo object
 include 'Koneksi.php';
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
@@ -13,16 +14,20 @@ if (!isset($_GET['id'])) {
     exit;
 }
 
-$id = intval($_GET['id']);
-$result = mysqli_query($conn, "SELECT * FROM galeri WHERE id = $id");
+$id = intval($_GET['id']); // Pastikan ID adalah integer
+
+// Menggunakan Prepared Statement PDO untuk SELECT
+$sql = "SELECT * FROM galeri WHERE id = ?";
+$stmt = $pdo->prepare($sql);
+$stmt->execute([$id]); // Eksekusi dengan binding parameter ID
 
 // Cek apakah data ditemukan
-if (!$result || mysqli_num_rows($result) == 0) {
+if ($stmt->rowCount() == 0) { // Menggunakan rowCount() untuk memeriksa jumlah baris
     echo "Data tidak ditemukan.";
     exit;
 }
 
-$row = mysqli_fetch_assoc($result);
+$row = $stmt->fetch(PDO::FETCH_ASSOC); // Mengambil satu baris hasil sebagai array asosiatif
 ?>
 
 <!DOCTYPE html>
@@ -60,30 +65,26 @@ $row = mysqli_fetch_assoc($result);
 <body>
 <div class="form-container">
     <h2>Edit Galeri Klien</h2>
-    <form action="proses_edit.php" method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="id" value="<?= $row['id'] ?>">
+    <form action="updategaleri.php" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="<?= htmlspecialchars($row['id']) ?>">
+        <input type="hidden" name="foto_lama" value="<?= htmlspecialchars($row['nama_file']) ?>"> <label>Judul:</label>
+        <input type="text" name="judul" value="<?= htmlspecialchars($row['judul']) ?>" required>
 
-        <label>Nama:</label>
-        <input type="text" name="nama_file" value="<?= $row['nama_file'] ?>" required>
+        <label>Keterangan:</label>
+        <textarea name="keterangan" rows="3" required><?= htmlspecialchars($row['keterangan']) ?></textarea>
 
-        <label>Deskripsi:</label>
-        <textarea name="keterangan" rows="3" required><?= $row['keterangan'] ?></textarea>
-
-        <label>Tanggal Upload:</label>
-        <input type="text" name="tanggal_upload" value="<?= $row['tanggal_upload'] ?>" required>
+        <label>Isi:</label>
+        <textarea name="isi" rows="6" required><?= htmlspecialchars($row['isi']) ?></textarea>
 
         <label>Kategori:</label>
         <select name="kategori" required>
-        <option value="umum" <?= $row['kategori'] == 'umum' ? 'selected' : '' ?>>Umum</option>
-        <option value="klien" <?= $row['kategori'] == 'klien' ? 'selected' : '' ?>>Klien</option>
+            <option value="umum" <?= ($row['kategori'] == 'umum') ? 'selected' : '' ?>>Umum</option>
+            <option value="klien" <?= ($row['kategori'] == 'klien') ? 'selected' : '' ?>>Klien</option>
         </select>
 
-
         <label>Ganti Foto (opsional):</label><br>
-        <img src="uploads/<?= $row['nama_file'] ?>" width="150"><br><br>
-        <input type="file" name="foto_baru"><br><br>
-
-        <button type="submit">Simpan Perubahan</button>
+        <img src="uploads/<?= htmlspecialchars($row['nama_file']) ?>" width="150" alt="Foto Lama"><br><br>
+        <input type="file" name="foto"><br><br> <button type="submit">Simpan Perubahan</button>
     </form>
 </div>
 </body>
