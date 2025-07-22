@@ -47,7 +47,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
 </head>
 <body>
 
-<?php include 'Template/header.php'; ?>
+<?php include 'template/header.php'; ?>
 
 <div class="admin-container">
   <h2> Dashboard Admin JKING Holdings</h2>

@@ -1,4 +1,4 @@
-<?php include 'Template/header.php'; ?>
+<?php include 'template/header.php'; ?>
 
 <div class="admin-container">
   <h2>Kelola Galeri Klien</h2>

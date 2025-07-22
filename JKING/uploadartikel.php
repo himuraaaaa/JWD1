@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
 
-<?php include 'Template/header.php'; ?>
+<?php include 'template/header.php'; ?>
 
 <div class="form-container">
   <h2>Upload Artikel</h2>

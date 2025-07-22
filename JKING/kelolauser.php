@@ -76,7 +76,7 @@ $users = mysqli_query($conn, "SELECT id, username, role FROM users");
 </head>
 <body>
 
-<?php include 'Template/header.php'; ?>
+<?php include 'template/header.php'; ?>
 
 <div class="table-container">
   <h2>Daftar Pengguna</h2>
