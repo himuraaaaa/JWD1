@@ -7,16 +7,16 @@ $user = getenv('MYSQL_USER');
 $pass = getenv('MYSQL_ROOT_PASSWORD'); // Gunakan ini karena ini password root yang Anda miliki
 $port = getenv('MYSQL_PORT');
 
-// **Debugging Tambahan (Hapus setelah berhasil):**
-// echo "DEBUG: Host: $host<br>";
-// echo "DEBUG: DBName: $dbname<br>";
-// echo "DEBUG: User: $user<br>";
-// echo "DEBUG: Pass: " . ($pass ? '*****' : 'NONE') . "<br>";
-// echo "DEBUG: Port: $port<br>";
-// if (!$host || !$dbname || !$user || !$pass || !$port) {
-//     die("DEBUG: Salah satu variabel lingkungan kosong. Periksa konfigurasi Railway.");
-// }
-// **Akhir Debugging Tambahan**
+**Debugging Tambahan (Hapus setelah berhasil):**
+echo "DEBUG: Host: $host<br>";
+echo "DEBUG: DBName: $dbname<br>";
+echo "DEBUG: User: $user<br>";
+echo "DEBUG: Pass: " . ($pass ? '*****' : 'NONE') . "<br>";
+echo "DEBUG: Port: $port<br>";
+if (!$host || !$dbname || !$user || !$pass || !$port) {
+     die("DEBUG: Salah satu variabel lingkungan kosong. Periksa konfigurasi Railway.");
+ }
+ **Akhir Debugging Tambahan**
 
 try {
     $pdo = new PDO("mysql:host=$host;port=$port;dbname=$dbname", $user, $pass);
