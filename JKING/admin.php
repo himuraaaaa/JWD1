@@ -63,7 +63,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
       <a href="uploadartikel.php"> Upload Artikel</a>
       <a href="uploadgaleri.php"> Upload File</a>
       <a href="kelolauser.php"> Kelola Pengguna</a>
-      <a href="Logout.php"> Logout</a>
+      <a href="logout.php"> Logout</a>
     </div>
 <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
   <a href="kelola_galeri.php" class="btn-auth" style="background-color: #007bff;">Kelola File</a>
